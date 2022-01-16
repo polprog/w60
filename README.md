@@ -1,9 +1,9 @@
 # HD-W60 reverse engineering
 
-# TODO
-- Find PA15 on headers(?)
-- Find out LED assignments
+## Todo
 
+- Establish JTAG/SWD communication with TZ32
+- Find out LED assignments
 
 HD-W60 is a small, affordable LED controller board available from various online outlets. This repository aims to document, reverse engineer, and provide development tools the board, as it is a feature rich Wi-Fi enabled device. 
 
@@ -61,13 +61,13 @@ The TZ32 drives two output drivers for the LED panels with U31 and U6 74HC245. T
 
 TZ32 JTAG is available on P20, P5 and P11 headers
 
-| JTAG pin   | Location  |
-|------------|-----------|
-| TDI (PA15) | ????      |
-| TDO (PB3)  | P5 "DAT"  |
-| TMS (PA13) | P20 pin 2 |
-| TCK (PA14) | P20 pin 1 |
-| TRST (PB4) | P11 "DAT" | 
+| JTAG pin   | SWD pin |  Location  |
+|------------|---------|------------|
+| TDI (PA15) |         | P20 pin 2  |
+| TDO (PB3)  |         | P5 "DAT"   |
+| TMS (PA13) | SWDIO   | S1 top or R10 |
+| TCK (PA14) | SWCLK   | P20 pin 1  |
+| TRST (PB4) |         | P11 "DAT"  | 
 
 
 ## Headers 
@@ -116,9 +116,19 @@ Pin 2 is ground on all 3. All 3 pins pulled up to 3v3
 | S4   | PA0  |
 
 
-# ESP8266 peripherals
+# ESP8266
 
 Only U2 serial flash is connected to the ESP8266
+
+## Boot mode
+
+GPIO0 is broken out on header S5 and pulled up. GPIO2 is pulled up. This means the boot mode can be selected between booting from flash (S5 open) and UART programming mode (S5 closed)
+
+| GPIO0 | Mode |
+|-------|------|
+| 1     | Flash startup |
+| 0     | UART programming |
+
 
 ## Headers
 
