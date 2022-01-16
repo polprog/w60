@@ -1,0 +1,39 @@
+HD-W60 led controller board
+
+2x HUB12
+1x HUB8
+1x USB
+
+Main MCU: TZ32F202C3T6 (U4)
+No google hits, very likely a clone of STM32F202C3T6. I can't regognize
+the logo. External flash P25Q16H (U18). 
+Flash ISP header (ISP), 1=CS#, 2=SI
+
+P12: 1=Vdd; 2=Vss; 3=GND
+P5:  DAT=PB3 (39)
+P11: DAT=PB4 (40)
+S4 = PA0
+S3 = PC15
+S2 = PF0
+All 3 pulled up to 3v3.
+P7: 1=3v3; 2=PF1
+(based From STM32F202C3T6 datasheet, LQFP48)
+USB goes to STM32. It's a downstream facing port
+
+
+Wi-Fi MCU: ESP8266EX (U1)
+Well known espressif MCU. Board has a Wi-Fi microstrip antenna. No ext connector
+Uses an external flash P25Q16H (U3)
+Headers:
+S5: 1=GPIO0; 2=GND
+S6: 1=GPIO4; 2=GND
+P20: 1=U0TXD; 2=U0RXD
+
+U3 AiP8563 I2C RTC
+
+U6, U31 74HC245 output drivers
+
+U2 AMS1117, 3v3 regulator
+
+
+TODO: figure out status LEDs
