@@ -1,5 +1,9 @@
 # HD-W60 reverse engineering
 
+# TODO
+- Find PA15 on headers(?)
+- Find out LED assignments
+
 
 HD-W60 is a small, affordable LED controller board available from various online outlets. This repository aims to document, reverse engineer, and provide development tools the board, as it is a feature rich Wi-Fi enabled device. 
 
@@ -40,7 +44,7 @@ I believe that it can be turned into a powerful IoT development board if it is p
 # P20 header
 
 | Pin | ESP8266 | TZ32 |
-|-----|-----------------
+|-----|---------|------|
 | 1   | U0TXD   | PA14 (JTCK) via jumper R6 |
 | 2   | U0RXD   | PA15 (JTDI) via jumper R7 |
 
@@ -52,6 +56,19 @@ P20 header is linked to UART on ESP826 and JTAG (partially) on TZ32.
 TZ32F202C3T6 has no analog in the STM32 part numbering scheme, so it is hard to say anything about it. The closest match I found was SMT32F302CBT6. Pin names below are matched to an LQFP48 package of the afromentioned STM32.
 
 The TZ32 drives two output drivers for the LED panels with U31 and U6 74HC245. The USB port is connected to this MCU. The microcontroller is also connected to the U18 P25Q16H serial flash. 
+
+## JTAG/SWD
+
+TZ32 JTAG is available on P20, P5 and P11 headers
+
+| JTAG pin   | Location  |
+|------------|-----------|
+| TDI (PA15) | ????      |
+| TDO (PB3)  | P5 "DAT"  |
+| TMS (PA13) | P20 pin 2 |
+| TCK (PA14) | P20 pin 1 |
+| TRST (PB4) | P11 "DAT" | 
+
 
 ## Headers 
 
