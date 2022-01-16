@@ -4,7 +4,7 @@
 HD-W60 is a small, affordable LED controller board available from various online outlets. This repository aims to document, reverse engineer, and provide development tools the board, as it is a feature rich Wi-Fi enabled device. 
 
 
-![Image of a HD-W60 v1.5 PCB](board.jpg)
+![Image of a HD-W60 v1.5 PCB](images/board.jpg)
 
 
 # Hardware
@@ -16,6 +16,7 @@ HD-W60 v1.5 hardware contains the following MCUs and peripherals:
 - AiP8563 I²C RTC with backup battery
 - 74HC245 output drivers
 
+![HD-W60 v1.5 PCB with superimposed pinout labels](images/pinout.png)
 
 
 The board has several IO ports listed below in no particular order:
