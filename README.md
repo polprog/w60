@@ -11,7 +11,7 @@ HD-W60 is a small, affordable LED controller board available from various online
 
 HD-W60 v1.5 hardware contains the following MCUs and peripherals:
 
-- TZ32F202C3T6 (For now I assume it is an STM32F202C3T6 clone)
+- TZ32F202C3T6 (For now I assume it is an STM32xxxxx clone)
 - ESP8266EX (A well known WiFi enabled SoC)
 - AiP8563 I²C RTC with backup battery
 - 74HC245 output drivers
@@ -37,10 +37,21 @@ I believe that it can be turned into a powerful IoT development board if it is p
 - U1 ESP8266EX
   - U3 P25Q16H
 
+# P20 header
+
+| Pin | ESP8266 | TZ32 |
+|-----|-----------------
+| 1   | U0TXD   | PA14 (JTCK) via jumper R6 |
+| 2   | U0RXD   | PA15 (JTDI) via jumper R7 |
+
+P20 header is linked to UART on ESP826 and JTAG (partially) on TZ32.
+
 
 # STM32 peripherals
 
-The STM32 drives two output drivers for the LED panels with U31 and U6 74HC245. The USB port is connected to this MCU. STM32 is also connected to the U18 P25Q16H serial flash. 
+TZ32F202C3T6 has no analog in the STM32 part numbering scheme, so it is hard to say anything about it. The closest match I found was SMT32F302CBT6. Pin names below are matched to an LQFP48 package of the afromentioned STM32.
+
+The TZ32 drives two output drivers for the LED panels with U31 and U6 74HC245. The USB port is connected to this MCU. The microcontroller is also connected to the U18 P25Q16H serial flash. 
 
 ## Headers 
 
@@ -93,13 +104,6 @@ Pin 2 is ground on all 3. All 3 pins pulled up to 3v3
 Only U2 serial flash is connected to the ESP8266
 
 ## Headers
-
-### P20
-
-| Pin | Function |
-|-----|----------
-| 1   | U0TXD |
-| 2   | U0RXD |
 
 ### Sx headers
 
