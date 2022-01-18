@@ -129,6 +129,18 @@ GPIO0 is broken out on header S5 and pulled up. GPIO2 is pulled up. This means t
 | 1     | Flash startup |
 | 0     | UART programming |
 
+## UART
+
+The UART interface opearates at 230400 bps 8N1. There is no bootlog, the device periodically sends a burst of binary and ascii data containing the SSID, then a series of AT commands
+
+```
+AT+SETBAUD=230400
+AT+SETBAUD?
+AT+GETSTATUS=0
+AT+VERSION?
+```
+and then repeats`AT+SETBAUD?` but does not react to any input.
+
 
 ## Headers
 
