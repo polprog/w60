@@ -51,11 +51,15 @@ I believe that it can be turned into a powerful IoT development board if it is p
 P20 header is linked to UART on ESP826 and JTAG (partially) on TZ32.
 
 
-# STM32 peripherals
+# TZ32
 
 TZ32F202C3T6 has no analog in the STM32 part numbering scheme, so it is hard to say anything about it. The closest match I found was SMT32F302CBT6. Pin names below are matched to an LQFP48 package of the afromentioned STM32.
 
 The TZ32 drives two output drivers for the LED panels with U31 and U6 74HC245. The USB port is connected to this MCU. The microcontroller is also connected to the U18 P25Q16H serial flash. 
+
+## Flash
+
+The external flash image contains a uboot reference at the very beginning, but no ARM code at all. The rest of the flash contains some graphic images and other data.
 
 ## JTAG/SWD
 
@@ -69,6 +73,7 @@ TZ32 JTAG is available on P20, P5 and P11 headers
 | TCK (PA14) | SWCLK   | P20 pin 1  |
 | TRST (PB4) |         | P11 "DAT"  | 
 
+No successful JTAG or SWD connection has been made so far
 
 ## Headers 
 
@@ -118,7 +123,11 @@ Pin 2 is ground on all 3. All 3 pins pulled up to 3v3
 
 # ESP8266
 
-Only U2 serial flash is connected to the ESP8266
+## SPI flash
+
+Only U2 serial flash is connected to the ESP8266. This SPI flash contains valid Xtensa code which seems to be a custom bootloader + application.
+
+It is possible to read it out (TL866 works, flashrom does not) while GPIO0 is shorted to ground with header S5. (Short S5, connect power, connect programming clip, read). The P25Q16H is not supported by minipro, but it can be forced to read as a different 25x16 spi flash. Programming was not attempted yet.
 
 ## Boot mode
 
@@ -131,7 +140,8 @@ GPIO0 is broken out on header S5 and pulled up. GPIO2 is pulled up. This means t
 
 ## UART
 
-The UART interface opearates at 230400 bps 8N1. There is no bootlog, the device periodically sends a burst of binary and ascii data containing the SSID, then a series of AT commands
+UART0 is broken out on the P20 header.
+The UART0 interface opearates at 230400 bps 8N1. There is no bootlog, the device sends a burst of binary and ascii data containing the SSID, then a series of AT commands
 
 ```
 AT+SETBAUD=230400
@@ -139,7 +149,7 @@ AT+SETBAUD?
 AT+GETSTATUS=0
 AT+VERSION?
 ```
-and then repeats`AT+SETBAUD?` but does not react to any input.
+and then repeats `AT+SETBAUD?` but does not react to any input.
 
 
 ## Headers
