@@ -1,24 +1,34 @@
 # HD-W60 reverse engineering
 
+## Current Progress
+
+TZ32: Very likely a DSP by cc-century.com
+
+ESP8266: Programming connection made.
+
+
+
 ## Todo
 
-- Establish JTAG/SWD communication with TZ32
+- Identify what MCU TZ32 really is.
 - Find out LED assignments
+- ESP8266 hello world application
+- Update SVG drawing
 
 HD-W60 is a small, affordable LED controller board available from various online outlets. This repository aims to document, reverse engineer, and provide development tools the board, as it is a feature rich Wi-Fi enabled device. 
 
 
 ![Image of a HD-W60 v1.5 PCB](images/board.jpg)
 
-
 # Hardware
 
 HD-W60 v1.5 hardware contains the following MCUs and peripherals:
 
-- TZ32F202C3T6 (For now I assume it is an STM32xxxxx clone)
+- TZ32F202C3T6 (unknown MCU - needs to be identified)
 - ESP8266EX (A well known WiFi enabled SoC)
 - AiP8563 I²C RTC with backup battery
 - 74HC245 output drivers
+- 2x 25Q16 High speed QSPI flash
 
 ![HD-W60 v1.5 PCB with superimposed pinout labels](images/pinout.png)
 
@@ -45,15 +55,17 @@ I believe that it can be turned into a powerful IoT development board if it is p
 
 | Pin | ESP8266 | TZ32 |
 |-----|---------|------|
-| 1   | U0TXD   | PA14 (JTCK) via jumper R6 |
-| 2   | U0RXD   | PA15 (JTDI) via jumper R7 |
+| 1   | U0TXD   | 37 via jumper R6 |
+| 2   | U0RXD   | 38 via jumper R7 |
 
-P20 header is linked to UART on ESP826 and JTAG (partially) on TZ32.
+P20 header is linked to UART on ESP826 and some IO pins (likely UART) on TZ32.
 
 
 # TZ32
 
-TZ32F202C3T6 has no analog in the STM32 part numbering scheme, so it is hard to say anything about it. The closest match I found was SMT32F302CBT6. Pin names below are matched to an LQFP48 package of the afromentioned STM32.
+Despite it's extremely similar name, the TZ32F202C3T6 is not an STM32 clone chip, or at least it is not pin compatible. The microcontroller needs to be identified.
+
+No information could be found online searching for a "TZ32" microcontroller.
 
 The TZ32 drives two output drivers for the LED panels with U31 and U6 74HC245. The USB port is connected to this MCU. The microcontroller is also connected to the U18 P25Q16H serial flash. 
 
@@ -61,19 +73,16 @@ The TZ32 drives two output drivers for the LED panels with U31 and U6 74HC245. T
 
 The external flash image contains a uboot reference at the very beginning, but no ARM code at all. The rest of the flash contains some graphic images and other data.
 
-## JTAG/SWD
+## UART
 
-TZ32 JTAG is available on P20, P5 and P11 headers
+There is what looks to be a programming header P12 which is unlabeled and unpopulated. Pins 35 and 36 from TZ32 go there. It has a UART port operating at 115200 8N1. The log is in the file uart_tz32.log
 
-| JTAG pin   | SWD pin |  Location  |
-|------------|---------|------------|
-| TDI (PA15) |         | P20 pin 2  |
-| TDO (PB3)  |         | P5 "DAT"   |
-| TMS (PA13) | SWDIO   | S1 top or R10 |
-| TCK (PA14) | SWCLK   | P20 pin 1  |
-| TRST (PB4) |         | P11 "DAT"  | 
+| Pin | Function |
+|-----|----------
+| 1   | TX  |
+| 2   | RX  |
+| 3   | GND |
 
-No successful JTAG or SWD connection has been made so far
 
 ## Headers 
 
@@ -99,7 +108,7 @@ SO is not connected, readot must be done via a SOIC clip.
 | Pin | Function |
 |-----|----------
 | 1   | +5V |
-| 2   | PB3 |
+| 2   | xxx |
 | 3   | GND |
 
 ### P11
@@ -107,7 +116,7 @@ SO is not connected, readot must be done via a SOIC clip.
 | Pin | Function |
 |-----|----------
 | 1   | +5V |
-| 2   | PB4 |
+| 2   | xxx |
 | 3   | GND |
 
 ### Sx headers
@@ -116,9 +125,9 @@ Pin 2 is ground on all 3. All 3 pins pulled up to 3v3
 
 | Header | Pin 1 function |
 |-----|----------
-| S2   | PF0  |
-| S3   | PC15 |
-| S4   | PA0  |
+| S2   | xxx  |
+| S3   | xxx  |
+| S4   | xxx  |
 
 
 # ESP8266
@@ -137,6 +146,8 @@ GPIO0 is broken out on header S5 and pulled up. GPIO2 is pulled up. This means t
 |-------|------|
 | 1     | Flash startup |
 | 0     | UART programming |
+
+A successful programming connection was made with esptool.
 
 ## UART
 

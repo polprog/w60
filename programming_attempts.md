@@ -2,6 +2,8 @@
 
 ## TZ32
 
+This is NOT an stm32, or at least NOT pin compatible. Below notes are therefore obsolete.
+
 ### Flash
 
 U18 can be read normally (for example with flashrom). The ROM contains several U-boot related strings (but no U-boot itself) and what appears to be images (low entropy chunks)
@@ -12,6 +14,9 @@ So far MCU is not answering to either JTAG or SWD programming attempts.
 This may be related to sharing TDI, TMS and SWDIO with ESP8266's UART pins.
 
 Removing R7 R6 0-ohm links did not allow me to connect with SWD.
+
+The TZ32's BOOT0 pin is floating. TODO: experiment with that. maybe they left the original UART/USB bootloader intact?
+
 
 ## ESP8266EX
 

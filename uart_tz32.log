@@ -1,0 +1,27 @@
+¹YJÍé18
+É±Ö¾£ºg_sys_cfg->sd_update_flg=0
+
+sys clk : 160000000
+lsb clk : 80000000
+
+ VM_INIT START ADDR = 0x001EF000 0x001F0000 0x001EF000 
+
+15 isr have install 
+
+18 isr have install 
+
+set isr:2
+ʹÄÖж31:TimeStampFromRTC=0X256e07a8
+set isr:5
+set isr:22
+ir key init
+set isr:3
+ϳÊ¼»¯ÍÏ
+
+²Á³ýê±Ï
+
+dma_config_send sing line initTimeStampFromRTC=0X256e07a9
+ln user_otg_dev_scan_check()1=0
+
+lm866 leinian creator 2019-4-4-----------------card version HD_W60_1 V4.23
+
